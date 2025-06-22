@@ -1,4 +1,3 @@
-import Heading from '@/components/heading';
 import { getImage } from '@/constants';
 import { SharedData } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
@@ -8,7 +7,6 @@ export default function () {
     return (
         <>
             <Head title="معهد سترايف" />
-            <Heading title="إختار تخصصك صح" description="معهد سترايف التعليمي" />
             <div className="relative isolate px-6 pt-14 lg:px-8">
                 <div aria-hidden="true" className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
                     <div

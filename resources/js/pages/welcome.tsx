@@ -1,4 +1,3 @@
-import Heading from '@/components/heading';
 import UserCard from '@/components/UserCard';
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import { type SharedData } from '@/types';
@@ -31,7 +30,6 @@ export default function ({ errors }: { errors?: string[] }) {
     return (
         <>
             <Head title="معهد سترايف" />
-            <Heading title="إختار تخصصك صح" description="معهد سترايف التعليمي" />
             <div className="flex min-h-screen flex-col items-center bg-[#FDFDFC] p-6 text-[#1b1b18] lg:justify-center lg:p-8 dark:bg-[#0a0a0a]">
                 <header className="mb-6 w-full max-w-[335px] text-sm not-has-[nav]:hidden lg:max-w-4xl">
                     <nav className="flex items-center justify-end gap-4">
