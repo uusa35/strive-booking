@@ -6,7 +6,7 @@ export default function () {
     const { name } = usePage<SharedData>().props;
     return (
         <>
-            <Head title="اختار تخصصك صح" />
+            <Head title="قريبا" />
             <div className="relative isolate px-6 pt-14 lg:px-8">
                 <div aria-hidden="true" className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
                     <div
