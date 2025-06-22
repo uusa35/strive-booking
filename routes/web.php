@@ -9,7 +9,11 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Http;
 
 Route::get('/', function () {
-    return Inertia::render('welcome');
+    if (app()->environment('development')) {
+        return Inertia::render('comming-soon');
+    } else {
+        return Inertia::render('welcome');
+    }
 })->name('home');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware(['adminAccess'])->group(function () {
