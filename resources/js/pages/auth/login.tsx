@@ -42,7 +42,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
     return (
         <AuthLayout title="الدخول لحسابك" description="إدخل رقم هاتفك الآن">
-            <Head title="Log in" />
+            <Head title="الدخول لحسابك" />
             <form className="flex flex-col gap-6" onSubmit={submit}>
                 <div className="grid gap-6">
                     <div className="grid gap-2">
@@ -95,8 +95,10 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                     </div>
 
                     <Button type="submit" className="btn-default mt-4 w-full" tabIndex={4} disabled={processing}>
-                        {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                        الدخول للحساب
+                        <div className="flex flex-row items-center justify-center gap-x-4">
+                            {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                            <div>الدخول للحساب</div>
+                        </div>
                     </Button>
                 </div>
 
@@ -104,6 +106,11 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                     لا تمتلك حساب أو تذكرة
                     <TextLink href={route('register')} tabIndex={5} className="mx-2">
                         سجل الآن
+                    </TextLink>
+                </div>
+                <div className="text-center text-sm text-muted-foreground">
+                    <TextLink href={route('home')} tabIndex={5} className="mx-2">
+                        العودة للرئيسية
                     </TextLink>
                 </div>
             </form>

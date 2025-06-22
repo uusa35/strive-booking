@@ -14,11 +14,12 @@ export default function ({ user }: any) {
 
     useEffect(() => {
         getQr();
-    }, []);
+    }, [user?.id]);
 
     const handleLogout = () => {
         cleanup();
         router.flushAll();
+        router.reload();
     };
 
     const getQr = async () =>
@@ -82,7 +83,7 @@ export default function ({ user }: any) {
                     <main className="flex w-full max-w-[400px] flex-col-reverse lg:max-w-4xl lg:flex-row">
                         <div className="flex flex-1 flex-col items-center justify-center space-y-6 bg-white text-[13px] lg:px-20 lg:pt-0 dark:bg-black dark:text-white dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d]">
                             {user && (
-                                <Alert variant="default" className="w-full bg-green-600 text-white">
+                                <Alert variant="default" className="w-full gap-y-2 bg-green-600 text-white">
                                     <UserRoundCheck className="size-12" />
                                     <AlertTitle>المستخدم مسجل لدينا بالفعل</AlertTitle>
                                     <AlertDescription className="text-white">بيانات هذا المستخدم مسجلة بالنظام بطريقة صحيحة</AlertDescription>

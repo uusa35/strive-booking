@@ -1,8 +1,3 @@
-import { type BreadcrumbItem } from '@/types';
-import { Transition } from '@headlessui/react';
-import { Head, Link, useForm, usePage } from '@inertiajs/react';
-import { FormEventHandler, Fragment } from 'react';
-
 import DeleteUser from '@/components/delete-user';
 import HeadingSmall from '@/components/heading-small';
 import InputError from '@/components/input-error';
@@ -11,7 +6,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
+import { type BreadcrumbItem } from '@/types';
+import { Transition } from '@headlessui/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { first, map } from 'lodash';
+import { FormEventHandler, Fragment } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -44,7 +43,6 @@ export default function Profile({
     interests?: string[];
 }) {
     const { auth } = usePage<any>().props;
-
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm<Required<ProfileForm>>({
         first_name: auth.user?.first_name ?? '',
         last_name: auth.user?.last_name ?? '',
@@ -133,7 +131,6 @@ export default function Profile({
 
                         <div className="grid gap-2">
                             <Label htmlFor="email">البريد الإلكتروني</Label>
-
                             <Input
                                 id="email"
                                 type="email"

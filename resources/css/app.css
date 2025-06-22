@@ -52,7 +52,7 @@ input {
     @apply inline-block rounded-full border border-teal-800 bg-teal-800 p-2 px-5 text-white transition-colors duration-75 first-letter:uppercase hover:border-teal-800 hover:bg-teal-600 lg:px-7 dark:bg-gray-600 dark:text-white;
 }
 .btn-outlined {
-    @apply inline-block rounded-full border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a] hover:bg-gray-100 dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b];
+    @apply inline-block rounded-full border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a] hover:bg-gray-100 dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b] dark:hover:bg-gray-600;
 }
 
 @theme {

@@ -1,14 +1,13 @@
-import { Head, useForm } from '@inertiajs/react';
-import { LoaderCircle } from 'lucide-react';
-import { FormEventHandler, Fragment } from 'react';
-
 import InputError from '@/components/input-error';
 import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
+import { Head, useForm } from '@inertiajs/react';
 import { first, map, values } from 'lodash';
+import { LoaderCircle } from 'lucide-react';
+import { FormEventHandler, Fragment } from 'react';
 import { toast } from 'sonner';
 
 type RegisterForm = {
@@ -90,22 +89,6 @@ export default function Register({ types, stages, interests }: any) {
                         />
                         <InputError message={errors.last_name} className="mt-2" />
                     </div>
-
-                    <div className="grid gap-2">
-                        <Label htmlFor="email">البريد الإلكتروني</Label>
-                        <Input
-                            id="email"
-                            type="email"
-                            tabIndex={2}
-                            autoComplete="email"
-                            value={data.email}
-                            onChange={(e) => setData('email', e.target.value)}
-                            disabled={processing}
-                            placeholder="email@example.com"
-                        />
-                        <InputError message={errors.email} />
-                    </div>
-
                     <div className="grid gap-2">
                         <Label htmlFor="mobile" className="required">
                             رقم الموبايل
@@ -124,6 +107,20 @@ export default function Register({ types, stages, interests }: any) {
                             placeholder="965xxxxxxx"
                         />
                         <InputError message={errors.mobile} className="mt-2" />
+                    </div>
+                    <div className="grid gap-2">
+                        <Label htmlFor="email">البريد الإلكتروني</Label>
+                        <Input
+                            id="email"
+                            type="email"
+                            tabIndex={2}
+                            autoComplete="email"
+                            value={data.email}
+                            onChange={(e) => setData('email', e.target.value)}
+                            disabled={processing}
+                            placeholder="email@example.com"
+                        />
+                        <InputError message={errors.email} />
                     </div>
 
                     <div className="grid gap-2">
@@ -149,7 +146,7 @@ export default function Register({ types, stages, interests }: any) {
                     <div className="grid gap-2">
                         <Label htmlFor="stage">المرحلة الدراسية</Label>
                         <div className="flex w-auto flex-row gap-4 py-4">
-                            {map(interests, (t, i) => (
+                            {map(stages, (t, i) => (
                                 <Fragment key={i}>
                                     <input
                                         name="stage"
@@ -163,13 +160,13 @@ export default function Register({ types, stages, interests }: any) {
                                 </Fragment>
                             ))}
                         </div>
-                        <InputError message={errors.stage} className="mt-2" />
+                        <InputError message={errors.academic_interest} className="mt-2" />
                     </div>
 
                     <div className="grid gap-2">
                         <Label htmlFor="academic_interest">إهتمامك الدراسي</Label>
                         <div className="flex w-auto flex-row gap-4 py-4">
-                            {map(stages, (t, i) => (
+                            {map(interests, (t, i) => (
                                 <Fragment key={i}>
                                     <input
                                         name="academic_interest"
@@ -219,8 +216,10 @@ export default function Register({ types, stages, interests }: any) {
                     </div>
 
                     <Button type="submit" className="btn-default mt-2 w-full" tabIndex={5} disabled={processing}>
-                        {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                        حفظ البيانات
+                        <div className="flex flex-row items-center justify-center gap-x-4">
+                            {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                            <div>حفظ البيانات</div>
+                        </div>
                     </Button>
                 </div>
 
@@ -228,6 +227,11 @@ export default function Register({ types, stages, interests }: any) {
                     <div>تمتلك حساب بالفعل؟</div>
                     <TextLink href={route('login')} tabIndex={6} className="text-balance">
                         إدخل هاتفك لتحميل بياناتك ومشاهدة التذكرة الخاصه بك
+                    </TextLink>
+                </div>
+                <div className="text-center text-sm text-muted-foreground">
+                    <TextLink href={route('home')} tabIndex={5} className="mx-2">
+                        العودة للرئيسية
                     </TextLink>
                 </div>
             </form>

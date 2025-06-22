@@ -5,18 +5,20 @@ import { Head, Link, router, usePage } from '@inertiajs/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-export default function () {
+export default function ({ errors }: { errors?: string[] }) {
     const { auth } = usePage<SharedData>().props;
     const [qr, setQr] = useState<any>(null);
     const cleanup = useMobileNavigation();
 
+    
     useEffect(() => {
         getQr();
-    }, []);
+    }, [auth.user?.id]);
 
     const handleLogout = () => {
         cleanup();
         router.flushAll();
+        router.reload();
     };
 
     const getQr = async () =>
@@ -28,7 +30,7 @@ export default function () {
 
     return (
         <>
-            <Head title="Welcome" />
+            <Head title="تذكرتي" />
             <div className="flex min-h-screen flex-col items-center bg-[#FDFDFC] p-6 text-[#1b1b18] lg:justify-center lg:p-8 dark:bg-[#0a0a0a]">
                 <header className="mb-6 w-full max-w-[335px] text-sm not-has-[nav]:hidden lg:max-w-4xl">
                     <nav className="flex items-center justify-end gap-4">
@@ -70,7 +72,7 @@ export default function () {
                 <div className="flex w-full items-start justify-center opacity-100 transition-opacity duration-750 lg:grow starting:opacity-0">
                     <main className="flex w-full max-w-[400px] flex-col-reverse lg:max-w-4xl lg:flex-row">
                         <div className="flex flex-1 flex-col items-center justify-center space-y-6 bg-white text-[13px] lg:px-20 lg:pt-0 dark:bg-black dark:text-white dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d]">
-                            <img src="images/choose_right.jpeg" className="h-auto w-40 object-cover" />
+                            <img src="/images/choose_right.jpeg" className="h-auto w-40 object-cover" />
                             <p className="mb-2 text-[#706f6c] dark:text-[#A1A09A]"></p>
                             {auth.user && !auth.user?.is_admin ? (
                                 <UserCard user={auth.user} />
