@@ -52,10 +52,10 @@ export default function Register({ types, stages, interests }: any) {
     };
 
     return (
-        <AuthLayout title="إنشاء تذكرة جديدة" description=" إدخل بياناتك بشكل صحيح">
+        <AuthLayout title="إنشاء تذكرة جديدة" description="">
             <Head title="سجل بياناتك" />
-            <form className="flex flex-col gap-6" onSubmit={submit}>
-                <div className="grid gap-6">
+            <form className="flex flex-col gap-3" onSubmit={submit}>
+                <div className="grid gap-3">
                     <div className="grid gap-2">
                         <Label htmlFor="first_name" className="required">
                             الاسم الاول
@@ -75,7 +75,7 @@ export default function Register({ types, stages, interests }: any) {
                         <InputError message={errors.first_name} className="mt-2" />
                     </div>
                     <div className="grid gap-2">
-                        <Label htmlFor="last_name">الاسم الاخير</Label>
+                        <Label htmlFor="last_name">الاسم الثاني</Label>
                         <Input
                             id="last_name"
                             type="text"
@@ -85,7 +85,7 @@ export default function Register({ types, stages, interests }: any) {
                             value={data.last_name}
                             onChange={(e) => setData('last_name', e.target.value)}
                             disabled={processing}
-                            placeholder="الاسم الاول"
+                            placeholder="الاسم الثاني"
                         />
                         <InputError message={errors.last_name} className="mt-2" />
                     </div>
@@ -132,7 +132,7 @@ export default function Register({ types, stages, interests }: any) {
                                         name="type"
                                         type="radio"
                                         value={t}
-                                        onChange={handleChange}
+                                        onChange={() => setData('type', t)}
                                         defaultChecked={data.type === t}
                                         className="text-prime-700 border-prime-300 mx-2 rounded-full border bg-white"
                                     />
@@ -152,7 +152,7 @@ export default function Register({ types, stages, interests }: any) {
                                         name="stage"
                                         type="radio"
                                         value={t}
-                                        onChange={handleChange}
+                                        onChange={() => setData('stage', t)}
                                         defaultChecked={data.stage === t}
                                         className="text-prime-700 border-prime-300 rounded-full border bg-white"
                                     />
@@ -172,7 +172,7 @@ export default function Register({ types, stages, interests }: any) {
                                         name="academic_interest"
                                         type="radio"
                                         value={t}
-                                        onChange={handleChange}
+                                        onChange={() => setData('academic_interest', t)}
                                         defaultChecked={data.academic_interest === t}
                                         className="text-prime-700 border-prime-300 rounded-full border bg-white"
                                     />
