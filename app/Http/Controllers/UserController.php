@@ -37,7 +37,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         if (!request()->user()->is_admin || $user->id === 1) {
-            return abort(404, 'معلومات غير صحيحة');
+            return redirect('login')->intended(route('user.show', $user));
         }
         return inertia('user/UserShow', compact('user'));
     }
