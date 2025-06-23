@@ -1,4 +1,5 @@
 import { MainDataTable } from '@/components/MainDataTable';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { User, type BreadcrumbItem } from '@/types';
@@ -88,7 +89,13 @@ export default function Dashboard({ elements }: { elements: User[] }) {
                 cell: ({ row }: any) => {
                     return (
                         <div className="sm-text flex max-w-60 flex-col items-start justify-start gap-y-2 truncate">
-                            <div>{row.original.email ?? 'N/A'}</div>
+                            {row.original.email ? (
+                                <div>{row.original.email}</div>
+                            ) : (
+                                <Badge variant="secondary" className="rounded-lg px-4">
+                                    لا يوجد
+                                </Badge>
+                            )}
                         </div>
                     );
                 },
@@ -152,24 +159,6 @@ export default function Dashboard({ elements }: { elements: User[] }) {
                     );
                 },
             },
-
-            // {
-            //     accessorKey: 'actions',
-            //     header: () => <div className="!p-0 capitalize">actions</div>,
-            //     enableColumnFilter: false,
-            //     enableGlobalFilter: false,
-            //     enableSorting: false,
-            //     cell: ({ row }) => {
-            //         const element: any = row.original;
-            //         return (
-            //             <DropdownMenu>
-            //                 <DropdownMenuTrigger asChild>
-            //                     <MoreHorizontalIcon className="h-4 w-4 text-gray-600" />
-            //                 </DropdownMenuTrigger>
-            //             </DropdownMenu>
-            //         );
-            //     },
-            // },
         ],
         [],
     );
