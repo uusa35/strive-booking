@@ -14,7 +14,6 @@ import { toast } from 'sonner';
 
 type LoginForm = {
     mobile: string;
-
     password: string;
     remember: boolean;
 };
@@ -28,7 +27,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
     const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
         mobile: '',
         password: 'password',
-        remember: false,
+        remember: true,
     });
 
     const submit: FormEventHandler = (e) => {
@@ -60,7 +59,6 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                         />
                         <InputError message={errors.mobile} />
                     </div>
-
                     <div className="grid hidden gap-2">
                         <div className="flex items-center">
                             <Label htmlFor="password">Password</Label>

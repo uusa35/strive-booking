@@ -1,9 +1,8 @@
-import '../css/app.css';
-
 import { Toaster } from '@/components/ui/sonner';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
+import '../css/app.css';
 import { initializeTheme } from './hooks/use-appearance';
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -15,7 +14,7 @@ createInertiaApp({
 
         root.render(
             <>
-                <Toaster position='top-center'/>
+                <Toaster position="top-center" />
                 <App {...props} />
             </>,
         );
