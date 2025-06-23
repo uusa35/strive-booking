@@ -154,7 +154,7 @@ export default function Profile({
                                             name="type"
                                             type="radio"
                                             value={t}
-                                            onChange={handleChange}
+                                            onChange={() => setData('type', t)}
                                             defaultChecked={data.type === t}
                                             className="text-prime-700 border-prime-300 mx-2 rounded-full border bg-white"
                                         />
@@ -174,7 +174,7 @@ export default function Profile({
                                             name="stage"
                                             type="radio"
                                             value={t}
-                                            onChange={handleChange}
+                                            onChange={() => setData('stage', t)}
                                             defaultChecked={data.stage === t}
                                             className="text-prime-700 border-prime-300 rounded-full border bg-white"
                                         />
@@ -194,7 +194,7 @@ export default function Profile({
                                             name="academic_interest"
                                             type="radio"
                                             value={t}
-                                            onChange={handleChange}
+                                            onChange={() => setData('academic_interest', t)}
                                             defaultChecked={data.academic_interest === t}
                                             className="text-prime-700 border-prime-300 rounded-full border bg-white"
                                         />
