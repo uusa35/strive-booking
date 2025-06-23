@@ -12,11 +12,11 @@ const sidebarNavItems: NavItem[] = [
         href: '/settings/profile',
         icon: null,
     },
-    {
-        title: 'كلمة المرور',
-        href: '/settings/password',
-        icon: null,
-    },
+    // {
+    //     title: 'كلمة المرور',
+    //     href: '/settings/password',
+    //     icon: null,
+    // },
     {
         title: 'شكل الموقع',
         href: '/settings/appearance',
