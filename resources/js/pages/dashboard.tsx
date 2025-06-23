@@ -9,7 +9,7 @@ import { useMemo } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Dashboard',
+        title: 'لوحة التحكم',
         href: '/dashboard',
     },
 ];
