@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'it@strivedu.com',
             'mobile' => '65772444',
         ]);
-        if (!env('production')) {
+        if (!app()->environment('production')) {
             User::factory(50)->create();
         }
     }
