@@ -148,7 +148,7 @@ export default function Profile({
                         <div className="grid gap-2">
                             <Label htmlFor="type">نوع التذكرة</Label>
                             <div className="flex w-auto flex-row gap-4 py-4">
-                                {map(types, (t, i) => (
+                                {map(types, (t, i: number) => (
                                     <Fragment key={i}>
                                         <input
                                             name="type"
@@ -168,7 +168,7 @@ export default function Profile({
                         <div className="grid gap-2">
                             <Label htmlFor="stage">المرحلة الدراسية</Label>
                             <div className="flex w-auto flex-row gap-4 py-4">
-                                {map(stages, (t, i) => (
+                                {map(stages, (t, i: number) => (
                                     <Fragment key={i}>
                                         <input
                                             name="stage"
@@ -188,7 +188,7 @@ export default function Profile({
                         <div className="grid gap-2">
                             <Label htmlFor="academic_interest">إهتمامك الدراسي</Label>
                             <div className="flex w-auto flex-row gap-4 py-4">
-                                {map(interests, (t, i) => (
+                                {map(interests, (t, i: number) => (
                                     <Fragment key={i}>
                                         <input
                                             name="academic_interest"
@@ -217,7 +217,6 @@ export default function Profile({
                                         Click here to resend the verification email.
                                     </Link>
                                 </p>
-
                                 {status === 'verification-link-sent' && (
                                     <div className="mt-2 text-sm font-medium text-green-600">
                                         A new verification link has been sent to your email address.
@@ -225,10 +224,8 @@ export default function Profile({
                                 )}
                             </div>
                         )}
-
                         <div className="flex items-center gap-4">
                             <Button disabled={processing}>حفظ البيانات</Button>
-
                             <Transition
                                 show={recentlySuccessful}
                                 enter="transition ease-in-out"
