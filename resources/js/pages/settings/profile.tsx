@@ -8,7 +8,7 @@ import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 import { type BreadcrumbItem } from '@/types';
 import { Transition } from '@headlessui/react';
-import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import { Head, Link, router, useForm, usePage } from '@inertiajs/react';
 import { first, map, values } from 'lodash';
 import { FormEventHandler, Fragment } from 'react';
 import { toast } from 'sonner';
@@ -63,22 +63,22 @@ export default function Profile({
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-
         patch(route('profile.update'), {
             preserveScroll: true,
-            onSuccess: () => toast.success('تم تحديث البيانات بنجاح'),
+            onSuccess: () => {
+                toast.success('تم تحديث البيانات بنجاح');
+            },
             onError: () => toast.error(first(values(errors))),
+            onFinish: () => router.reload({ only: ['auth'] }),
         });
     };
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="بيانات الحساب" />
-
             <SettingsLayout>
                 <div className="space-y-6">
                     <HeadingSmall title="معلومات الحساب" description=" يمكنك تحديث معلومات حسابك" />
-
                     <form onSubmit={submit} className="space-y-6">
                         <div className="grid gap-2">
                             <Label htmlFor="first_name" className="required">

@@ -29,7 +29,7 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href="/dashboard" prefetch>
+                            <Link href={route('dashboard')} prefetch cacheFor={500}>
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>

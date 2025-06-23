@@ -3,12 +3,11 @@ import UserCard from '@/components/UserCard';
 import { getImage } from '@/constants';
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import { type SharedData } from '@/types';
-import { Head, Link, router, usePage } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-export default function ({ errors }: { errors?: string[] }) {
-    const { auth } = usePage<SharedData>().props;
+export default function ({ auth }: SharedData) {
     const [qr, setQr] = useState<any>(null);
     const cleanup = useMobileNavigation();
 

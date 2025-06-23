@@ -1,18 +1,8 @@
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
-import { type SharedData } from '@/types';
-import { Head, Link, router, usePage } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { UserRoundCheck } from 'lucide-react';
 
-export default function (props: any) {    const { auth } = usePage<SharedData>().props;
-    const cleanup = useMobileNavigation();
-
-    const handleLogout = () => {
-        cleanup();
-        router.flushAll();
-        router.reload();
-    };
-
+export default function (props: any) {
     return (
         <>
             <Head title="تذكرتي" />

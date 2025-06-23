@@ -2,27 +2,18 @@ import AppFrontHeader from '@/components/AppFrontHeader';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import UserCard from '@/components/UserCard';
 import { getImage } from '@/constants';
-import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
-import { type SharedData } from '@/types';
-import { Head, Link, router, usePage } from '@inertiajs/react';
+import { User } from '@/types';
+import { Head, Link } from '@inertiajs/react';
 import axios from 'axios';
 import { UserRoundCheck } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-export default function ({ user }: any) {
-    const { auth } = usePage<SharedData>().props;
+export default function ({ user }: { user: User }) {
     const [qr, setQr] = useState<any>(null);
-    const cleanup = useMobileNavigation();
 
     useEffect(() => {
         getQr();
     }, [user?.id]);
-
-    const handleLogout = () => {
-        cleanup();
-        router.flushAll();
-        router.reload();
-    };
 
     const getQr = async () =>
         await axios.get('/api/qr', { params: { link: route('user.show', user.id) } }).then((r) => {

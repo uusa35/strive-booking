@@ -144,6 +144,7 @@ export default function Dashboard({ elements }: { elements: User[] }) {
                     return (
                         <Link
                             prefetch
+                            cacheFor={500}
                             href={route('user.show', row.original.id)}
                             className="sm-text flex max-w-40 flex-col items-start justify-start gap-y-2 truncate capitalize"
                         >
