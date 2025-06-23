@@ -51,27 +51,8 @@ export default function Dashboard({ elements }: { elements: User[] }) {
                 },
                 cell: ({ row }: any) => {
                     return (
-                        <div className="sm-text flex max-w-40 flex-col items-start justify-start gap-y-2 truncate capitalize">
+                        <div className="sm-text flex max-w-60 flex-col items-start justify-start gap-y-2 truncate capitalize">
                             <div>{`${row.original.full_name} `}</div>
-                        </div>
-                    );
-                },
-            },
-
-            {
-                accessorKey: 'email',
-                header: ({ column }: any) => {
-                    return (
-                        <Button variant="ghost" className="!p-0 capitalize" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-                            ايميل
-                            <ArrowUpDown className="mx-2 h-4 w-4" />
-                        </Button>
-                    );
-                },
-                cell: ({ row }: any) => {
-                    return (
-                        <div className="sm-text flex max-w-40 flex-col items-start justify-start gap-y-2 truncate">
-                            <div>{row.original.email ?? 'N/A'}</div>
                         </div>
                     );
                 },
@@ -90,6 +71,24 @@ export default function Dashboard({ elements }: { elements: User[] }) {
                     return (
                         <div className="sm-text flex max-w-40 flex-col items-start justify-start gap-y-2 truncate capitalize">
                             <div>{row.original.mobile}</div>
+                        </div>
+                    );
+                },
+            },
+            {
+                accessorKey: 'email',
+                header: ({ column }: any) => {
+                    return (
+                        <Button variant="ghost" className="!p-0 capitalize" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+                            ايميل
+                            <ArrowUpDown className="mx-2 h-4 w-4" />
+                        </Button>
+                    );
+                },
+                cell: ({ row }: any) => {
+                    return (
+                        <div className="sm-text flex max-w-60 flex-col items-start justify-start gap-y-2 truncate">
+                            <div>{row.original.email ?? 'N/A'}</div>
                         </div>
                     );
                 },
