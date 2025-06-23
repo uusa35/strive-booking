@@ -49,7 +49,7 @@ export default function ({ errors }: { errors?: string[] }) {
                                 ) : (
                                     <>
                                         <Link href={route('profile.edit')} className="btn-default">
-                                            بياناتي
+                                            تعديل البيانات
                                         </Link>
 
                                         <Link method="post" href={route('logout')} as="button" onClick={handleLogout} className="btn-outlined">
