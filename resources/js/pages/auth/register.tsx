@@ -52,7 +52,7 @@ export default function Register({ types, stages, interests }: any) {
     };
 
     return (
-        <AuthLayout title="إنشاء تذكرة جديدة" description=" إدخل بياناتك لتسجيل تذكرة جديدة">
+        <AuthLayout title="إنشاء تذكرة جديدة" description=" إدخل بياناتك بشكل صحيح">
             <Head title="سجل بياناتك" />
             <form className="flex flex-col gap-6" onSubmit={submit}>
                 <div className="grid gap-6">

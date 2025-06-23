@@ -41,7 +41,7 @@ class RegisteredUserController extends Controller
             'first_name' => 'required|string|max:255',
             'last_name' => 'nullable|string|max:255',
             'email' => 'nullable|string|lowercase|email',
-            'mobile' => 'required|string|min:5|max:16|unique:' . User::class,
+            'mobile' => 'required|min:8|max:16|regex:/[0-9]/|unique:users,mobile',
             'type' => ['nullable', 'string', Rule::in(UserTypeEnum::cases())],
             'stage' => ['nullable', 'string', Rule::in(StageEnum::cases())],
             'academic_interest' => ['nullable', 'string', Rule::in(AcademicInterestEnum::cases())],

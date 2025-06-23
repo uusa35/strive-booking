@@ -2,9 +2,9 @@ import { MainDataTable } from '@/components/MainDataTable';
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { User, type BreadcrumbItem } from '@/types';
-import { Head, usePage } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
-import { ArrowUpDown } from 'lucide-react';
+import { ArrowUpDown, Eye } from 'lucide-react';
 import { useMemo } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -127,6 +127,27 @@ export default function Dashboard({ elements }: { elements: User[] }) {
                         <div className="sm-text flex max-w-40 flex-col items-start justify-start gap-y-2 truncate capitalize">
                             <div>{row.original.stage}</div>
                         </div>
+                    );
+                },
+            },
+            {
+                accessorKey: 'view',
+                header: ({ column }: any) => {
+                    return (
+                        <Button variant="ghost" className="!p-0 capitalize" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+                            التذكرة
+                            <ArrowUpDown className="mx-2 h-4 w-4" />
+                        </Button>
+                    );
+                },
+                cell: ({ row }: any) => {
+                    return (
+                        <Link
+                            href={route('user.show', row.original.id)}
+                            className="sm-text flex max-w-40 flex-col items-start justify-start gap-y-2 truncate capitalize"
+                        >
+                            <Eye className="size-6 text-gray-600" />
+                        </Link>
                     );
                 },
             },

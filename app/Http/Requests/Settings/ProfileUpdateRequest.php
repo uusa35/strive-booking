@@ -20,8 +20,8 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255', 'min:4'],
+            'last_name' => ['nullable', 'string', 'max:255', 'min:4', 'max:255'],
             'email' => [
                 'nullable',
                 'string',
@@ -30,7 +30,7 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
 
             ],
-            'mobile' => ['required', Rule::unique(User::class)->ignore($this->user()->id),],
+            'mobile' => ['required', 'min:6', 'regex:/[0-9]/', 'max:16', Rule::unique(User::class)->ignore($this->user()->id),],
             'type' => ['nullable', 'string', Rule::in(UserTypeEnum::cases())],
             'stage' => ['nullable', 'string', Rule::in(StageEnum::cases())],
             'academic_interest' => ['nullable', 'string', Rule::in(AcademicInterestEnum::cases())],

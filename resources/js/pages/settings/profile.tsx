@@ -9,8 +9,9 @@ import SettingsLayout from '@/layouts/settings/layout';
 import { type BreadcrumbItem } from '@/types';
 import { Transition } from '@headlessui/react';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
-import { first, map } from 'lodash';
+import { first, map, values } from 'lodash';
 import { FormEventHandler, Fragment } from 'react';
+import { toast } from 'sonner';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -65,6 +66,8 @@ export default function Profile({
 
         patch(route('profile.update'), {
             preserveScroll: true,
+            onSuccess: () => toast.success('تم تحديث البيانات بنجاح'),
+            onError: () => toast.error(first(values(errors))),
         });
     };
 
@@ -104,7 +107,6 @@ export default function Profile({
                                 className="mt-1 block w-full"
                                 value={data.last_name}
                                 onChange={(e) => setData('last_name', e.target.value)}
-                                required
                                 autoComplete="last_name"
                                 placeholder="Last name"
                             />
