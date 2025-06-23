@@ -137,7 +137,7 @@ export function MainDataTable<TData, TValue>({
                             ) : (
                                 <TableRow className=" ">
                                     <TableCell colSpan={columns.length} className="mx-auto h-full w-200 self-center">
-                                        <img src={getImage('no_results.png')} className="mx-auto h-auto w-200 object-cover" />
+                                        <img src={getImage('no_results.png')} className="mx-auto h-auto w-80 object-cover" />
                                     </TableCell>
                                 </TableRow>
                             )}
