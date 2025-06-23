@@ -179,7 +179,7 @@ export function MainDataTable<TData, TValue>({
                     <div className="flex flex-row items-center justify-center gap-x-2 capitalize">
                         <div>next</div>
                         <div>
-                            <ArrowLeft className="h-3 w-3 rotate-180" />
+                            <ArrowLeft className="h-3 w-3 ltr:rotate-180" />
                         </div>
                     </div>
                 </Button>

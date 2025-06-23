@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             'mobile' => '65772444',
         ]);
         if (!env('production')) {
-            User::factory(10)->create();
+            User::factory(50)->create();
         }
     }
 }
