@@ -51,12 +51,11 @@ export default function ({ user }: { user: User }) {
                                 </Link>
                             )}
                         </div>
-                        <div className="relative -mb-px aspect-[335/376] w-full shrink-0 overflow-hidden bg-transparent lg:mb-0 lg:-ml-px lg:aspect-auto lg:w-[400px]">
+                        <div className="relative -mb-px aspect-[100/110] w-full shrink-0 bg-transparent md:aspect-[335/376] lg:mb-0 lg:-ml-px lg:aspect-auto lg:w-[400px]">
                             {qr && <div dangerouslySetInnerHTML={{ __html: qr }} className="flex h-full w-full" />}
                         </div>
                     </main>
                 </div>
-                <div className="hidden h-14.5 lg:block"></div>
             </div>
         </>
     );

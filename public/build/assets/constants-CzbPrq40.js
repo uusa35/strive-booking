@@ -1,0 +1,1 @@
+import"./lodash-DzwLVKjv.js";const e=!1,o=s=>s.replace(/[\u0660-\u0669\u06f0-\u06f9]/g,a=>a.charCodeAt(0)&15),p=(s,a)=>`https://api.whatsapp.com/send?phone=${s}&`,c=s=>`/images/${s}`;export{c as g,e as i,o as t,p as w};
