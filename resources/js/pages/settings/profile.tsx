@@ -3,6 +3,7 @@ import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { toEn } from '@/constants';
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 import { type BreadcrumbItem } from '@/types';
@@ -121,7 +122,7 @@ export default function Profile({
                                 id="mobile"
                                 className="mt-1 block w-full"
                                 value={data.mobile}
-                                onChange={(e) => setData('mobile', e.target.value)}
+                                onChange={(e) => setData('mobile', toEn(e.target.value))}
                                 required
                                 autoComplete="mobile"
                                 placeholder="Last name"

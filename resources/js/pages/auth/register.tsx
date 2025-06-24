@@ -3,6 +3,7 @@ import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { toEn } from '@/constants';
 import AuthLayout from '@/layouts/auth-layout';
 import { Head, useForm } from '@inertiajs/react';
 import { first, map, values } from 'lodash';
@@ -102,7 +103,7 @@ export default function Register({ types, stages, interests }: any) {
                             tabIndex={1}
                             autoComplete="mobile"
                             value={data.mobile}
-                            onChange={(e) => setData('mobile', e.target.value)}
+                            onChange={(e) => setData('mobile', toEn(e.target.value))}
                             disabled={processing}
                             placeholder="965xxxxxxx"
                         />
