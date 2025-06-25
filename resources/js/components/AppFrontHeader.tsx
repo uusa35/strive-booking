@@ -10,10 +10,10 @@ export default function () {
                     <>
                         {auth.user.is_admin ? (
                             <>
-                                <Link href={route('dashboard')} className="btn-outlined">
+                                <Link href={route('dashboard')} className="btn-outlined" prefetch>
                                     لوحة التحكم
                                 </Link>
-                                <Link href={route('profile.edit')} className="btn-outlined">
+                                <Link href={route('profile.edit')} className="btn-outlined" prefetch>
                                     بيانات الحساب
                                 </Link>
                             </>
