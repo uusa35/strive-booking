@@ -5,7 +5,7 @@ export default function () {
     const { auth } = usePage<SharedData>().props;
     return (
         <header className="mb-6 w-full max-w-[335px] text-sm not-has-[nav]:hidden lg:max-w-4xl">
-            <nav className="flex items-center justify-end gap-4">
+            <nav className="flex items-center justify-center gap-4">
                 {auth.user ? (
                     <>
                         {auth.user.is_admin ? (
@@ -34,14 +34,14 @@ export default function () {
                         )}
                     </>
                 ) : (
-                    <>
-                        <Link href={route('login')} className="btn-default">
+                    <div className="flex flex-row gap-x-1 sm:gap-x-2">
+                        <Link href={route('login')} className="btn-default text-lg">
                             مسجل بالفعل
                         </Link>
-                        <Link href={route('register')} className="btn-outlined">
-                            إنشاء تذكرة جديدة
+                        <Link href={route('register')} className="btn-default !text-lg">
+                            سجل حساب جديد
                         </Link>
-                    </>
+                    </div>
                 )}
             </nav>
         </header>
