@@ -81,7 +81,7 @@ export default function Register({ types, stages, interests }: any) {
                             id="last_name"
                             type="text"
                             autoFocus
-                            tabIndex={1}U
+                            tabIndex={1}
                             autoComplete="last_name"
                             value={data.last_name}
                             onChange={(e) => setData('last_name', e.target.value)}
