@@ -44,7 +44,7 @@ export default function ({ auth }: SharedData) {
                                 <UserCard user={auth.user} />
                             ) : (
                                 <Link href={route('register')} target="_blank" className="btn-default px-4 text-xl">
-                                    {auth?.user?.is_admin ? 'لوحة التحكم' : ' سـجل الآن'}
+                                    {auth?.user?.is_admin ? 'لوحة التحكم' : ' امسح الكود للتسجيل مباشرة'}
                                 </Link>
                             )}
                         </div>
