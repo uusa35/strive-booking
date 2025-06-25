@@ -28,8 +28,8 @@ export default function ({ user }: { user: User }) {
             <div className="flex min-h-screen flex-col items-center bg-[#FDFDFC] p-6 text-[#1b1b18] lg:justify-center lg:p-8 dark:bg-[#0a0a0a]">
                 <AppFrontHeader />
                 <div className="flex w-full items-start justify-center opacity-100 transition-opacity duration-750 lg:grow starting:opacity-0">
-                    <main className="flex w-full max-w-[400px] flex-col-reverse lg:max-w-4xl lg:flex-row">
-                        <div className="flex flex-1 flex-col items-center justify-center space-y-6 bg-white text-[13px] lg:px-20 lg:pt-0 dark:bg-transparent dark:text-white">
+                    <main className="flex w-full max-w-[400px] flex-col-reverse">
+                        <div className="mt-4 flex flex-col items-center justify-center space-y-6 bg-white text-[13px] dark:bg-transparent dark:text-white">
                             {user && (
                                 <Alert variant="default" className="w-full gap-y-2 bg-green-600 text-white">
                                     <UserRoundCheck className="size-12" />
@@ -51,8 +51,8 @@ export default function ({ user }: { user: User }) {
                                 </Link>
                             )}
                         </div>
-                        <div className="relative -mb-px aspect-[100/110] w-full shrink-0 bg-transparent md:aspect-[335/376] lg:mb-0 lg:-ml-px lg:aspect-auto lg:w-[400px]">
-                            {qr && <div dangerouslySetInnerHTML={{ __html: qr }} className="flex h-full w-full" />}
+                        <div className="relative flex aspect-[150/100] w-full items-center justify-center bg-transparent lg:aspect-auto">
+                            {qr && <div dangerouslySetInnerHTML={{ __html: qr }} className="flex h-auto w-full items-center justify-center" />}
                         </div>
                     </main>
                 </div>

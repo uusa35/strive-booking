@@ -75,7 +75,7 @@ export default function Register({ types, stages, interests }: any) {
                         />
                         <InputError message={errors.first_name} className="mt-2" />
                     </div>
-                    <div className="grid gap-2">
+                    <div className="grid hidden gap-2">
                         <Label htmlFor="last_name">الاسم الثاني</Label>
                         <Input
                             id="last_name"
@@ -109,7 +109,7 @@ export default function Register({ types, stages, interests }: any) {
                         />
                         <InputError message={errors.mobile} className="mt-2" />
                     </div>
-                    <div className="grid gap-2">
+                    <div className="grid hidden gap-2">
                         <Label htmlFor="email">البريد الإلكتروني</Label>
                         <Input
                             id="email"
