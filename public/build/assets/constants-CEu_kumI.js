@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:public/build/assets/constants-BFDv6CCt.js
-import{f as Ve}from"./app-DC30Dpsb.js";var te={exports:{}};/**
-========
 import{f as Ve}from"./app-BjIbtOSt.js";var te={exports:{}};/**
->>>>>>>> develop:public/build/assets/constants-CEu_kumI.js
  * @license
  * Lodash <https://lodash.com/>
  * Copyright OpenJS Foundation and other contributors <https://openjsf.org/>

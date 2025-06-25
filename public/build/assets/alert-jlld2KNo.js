@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:public/build/assets/alert-DGzRzX-f.js
-import{c as i,a as r,b as o}from"./index-B8N0xKJx.js";import{j as a}from"./app-DC30Dpsb.js";/**
-========
 import{c as i,a as r,b as o}from"./index-D4_Otn-6.js";import{j as a}from"./app-BjIbtOSt.js";/**
->>>>>>>> develop:public/build/assets/alert-jlld2KNo.js
  * @license lucide-react v0.475.0 - ISC
  *
  * This source code is licensed under the ISC license.

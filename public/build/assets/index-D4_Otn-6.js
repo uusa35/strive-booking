@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:public/build/assets/index-B8N0xKJx.js
-import{r as W}from"./app-DC30Dpsb.js";/**
-========
 import{r as W}from"./app-BjIbtOSt.js";/**
->>>>>>>> develop:public/build/assets/index-D4_Otn-6.js
  * @license lucide-react v0.475.0 - ISC
  *
  * This source code is licensed under the ISC license.

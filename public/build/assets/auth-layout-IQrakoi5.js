@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:public/build/assets/auth-layout-B4eAsSsE.js
-import{c as r}from"./index-B8N0xKJx.js";import{j as e,a as l}from"./app-DC30Dpsb.js";/**
-========
 import{c as r}from"./index-D4_Otn-6.js";import{j as e,a as l}from"./app-BjIbtOSt.js";/**
->>>>>>>> develop:public/build/assets/auth-layout-IQrakoi5.js
  * @license lucide-react v0.475.0 - ISC
  *
  * This source code is licensed under the ISC license.
