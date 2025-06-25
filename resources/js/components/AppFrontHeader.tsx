@@ -35,10 +35,10 @@ export default function () {
                     </>
                 ) : (
                     <div className="flex flex-row gap-x-1 sm:gap-x-2">
-                        <Link href={route('login')} className="btn-default text-lg">
+                        <Link href={route('login')} className="btn-default text-md sm:text-lg">
                             مسجل بالفعل
                         </Link>
-                        <Link href={route('register')} className="btn-default !text-lg">
+                        <Link href={route('register')} className="btn-default text-md sm:text-lg">
                             سجل حساب جديد
                         </Link>
                     </div>
