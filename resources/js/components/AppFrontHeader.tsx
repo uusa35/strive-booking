@@ -19,8 +19,11 @@ export default function () {
                             </>
                         ) : (
                             <>
-                                <Link href={route('profile.edit')} className="rounded-md p-2 px-3 dark:bg-white">
-                                    بياناتي
+                                <Link
+                                    href={route('profile.edit')}
+                                    className="rounded-md border border-gray-100 p-2 px-3 hover:bg-gray-200 dark:bg-white"
+                                >
+                                    تعديل بياناتي
                                 </Link>
                                 <Link
                                     href={route('logout')}
