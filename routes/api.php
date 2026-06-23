@@ -9,7 +9,6 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('qr', function () {
-
     return response(
         QrCode::merge(public_path('images/choose_right.jpeg'), 0.2, true)
             ->size(400)
@@ -23,7 +22,6 @@ Route::get('qr', function () {
             ->generate(request()->link),
         200
     )
-
         ->header('Content-Type', 'image/svg+xml')
         ->header('Content-Disposition', 'attachment; filename="qrcode.svg"');
 })->name('qr');
