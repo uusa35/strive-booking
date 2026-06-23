@@ -45,7 +45,7 @@ class RegisteredUserController extends Controller
             'type' => ['nullable', 'string', Rule::in(UserTypeEnum::cases())],
             'stage' => ['nullable', 'string', Rule::in(StageEnum::cases())],
             'academic_interest' => ['nullable', 'string', Rule::in(AcademicInterestEnum::cases())],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
         ]);
         $user = User::create([
             'first_name' => $request->first_name,
@@ -55,7 +55,7 @@ class RegisteredUserController extends Controller
             'type' => $request->type,
             'academic_interest' => $request->academic_interest,
             'stage' => $request->stage,
-            'password' => Hash::make($request->password),
+            'password' => Hash::make($request->filled('password') ? $request->password : 'password'),
             'email_verified_at' => now()
         ]);
         if ($request->email) {
