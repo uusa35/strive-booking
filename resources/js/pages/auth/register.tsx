@@ -189,7 +189,6 @@ export default function Register({ types, stages, interests }: any) {
                         <Input
                             id="password"
                             type="password"
-                            required
                             tabIndex={3}
                             autoComplete="new-password"
                             value={data.password}
@@ -205,7 +204,6 @@ export default function Register({ types, stages, interests }: any) {
                         <Input
                             id="password_confirmation"
                             type="password"
-                            required
                             tabIndex={4}
                             autoComplete="new-password"
                             value={data.password_confirmation}
