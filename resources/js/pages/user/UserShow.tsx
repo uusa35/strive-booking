@@ -2,6 +2,7 @@ import AppFrontHeader from '@/components/AppFrontHeader';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import UserCard from '@/components/UserCard';
 import { getImage } from '@/constants';
+import { useTrans } from '@/lib/i18n';
 import { User } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import axios from 'axios';
@@ -9,6 +10,7 @@ import { UserRoundCheck } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 export default function ({ user }: { user: User }) {
+    const { t } = useTrans();
     const [qr, setQr] = useState<any>(null);
 
     useEffect(() => {
@@ -22,8 +24,8 @@ export default function ({ user }: { user: User }) {
 
     return (
         <>
-            <Head title="معهد سترايف - بيانات المستخدم">
-                <meta name="description" content={'معهد سترايف التعليمي'} />
+            <Head title={t('strive_user_data')}>
+                <meta name="description" content={t('strive_institute_desc')} />
             </Head>
             <div className="flex min-h-screen flex-col items-center bg-[#FDFDFC] p-6 text-[#1b1b18] lg:justify-center lg:p-8 dark:bg-[#0a0a0a]">
                 <AppFrontHeader />
@@ -33,8 +35,8 @@ export default function ({ user }: { user: User }) {
                             {user && (
                                 <Alert variant="default" className="w-full gap-y-2 bg-green-600 text-white">
                                     <UserRoundCheck className="size-12" />
-                                    <AlertTitle>المستخدم مسجل لدينا بالفعل</AlertTitle>
-                                    <AlertDescription className="text-white">بيانات هذا المستخدم مسجلة بالنظام بطريقة صحيحة</AlertDescription>
+                                    <AlertTitle>{t('user_registered_title')}</AlertTitle>
+                                    <AlertDescription className="text-white">{t('user_registered_desc')}</AlertDescription>
                                 </Alert>
                             )}
                             <img src={getImage('choose_right.jpeg')} className="h-auto w-40 object-cover" />
@@ -47,7 +49,7 @@ export default function ({ user }: { user: User }) {
                                     target="_blank"
                                     className="inline-block rounded-sm border border-teal-400 bg-teal-600 px-5 py-1.5 text-sm leading-normal text-white hover:border-teal-400 hover:bg-teal-900 dark:border-teal-400 dark:bg-[#eeeeec] dark:text-[#1C1C1A] dark:hover:border-white dark:hover:bg-white"
                                 >
-                                    سجل الآن
+                                    {t('register_now')}
                                 </Link>
                             )}
                         </div>

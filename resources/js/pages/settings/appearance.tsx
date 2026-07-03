@@ -5,23 +5,24 @@ import HeadingSmall from '@/components/heading-small';
 import { type BreadcrumbItem } from '@/types';
 
 import AppLayout from '@/layouts/app-layout';
+import { useTrans } from '@/lib/i18n';
 import SettingsLayout from '@/layouts/settings/layout';
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'طريقة ظهور الموقع',
-        href: '/settings/appearance',
-    },
-];
-
 export default function Appearance() {
+    const { t } = useTrans();
+    const breadcrumbs: BreadcrumbItem[] = [
+        {
+            title: t('site_appearance'),
+            href: '/settings/appearance',
+        },
+    ];
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="مظهر الموقع" />
+            <Head title={t('site_appearance')} />
 
             <SettingsLayout>
                 <div className="space-y-6">
-                    <HeadingSmall title="التحكم بألوان الموقع" description="تعديل الألوان الرئيسية والخلفية الخاصة بك" />
+                    <HeadingSmall title={t('appearance_title')} description={t('appearance_desc')} />
                     <AppearanceTabs />
                 </div>
             </SettingsLayout>

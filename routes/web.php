@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Http;
 
+Route::post('locale', function (\Illuminate\Http\Request $request) {
+    $request->validate(['locale' => 'required|in:en,ar']);
+    $request->session()->put('locale', $request->locale);
+    return back();
+})->name('locale.set');
+
 Route::get('/', function () {
     if (app()->environment('development')) {
         return Inertia::render('comming-soon');

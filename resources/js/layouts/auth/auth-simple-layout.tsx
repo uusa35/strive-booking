@@ -1,4 +1,5 @@
 import AppLogoIcon from '@/components/app-logo-icon';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { Link } from '@inertiajs/react';
 import { type PropsWithChildren } from 'react';
 
@@ -11,6 +12,9 @@ interface AuthLayoutProps {
 export default function AuthSimpleLayout({ children, title, description }: PropsWithChildren<AuthLayoutProps>) {
     return (
         <div className="flex min-h-svh flex-col items-center justify-start gap-6 bg-background p-6 md:p-10">
+            <div className="flex w-full max-w-sm justify-end">
+                <LanguageSwitcher />
+            </div>
             <div className="w-full max-w-sm">
                 <div className="flex flex-col gap-2">
                     <div className="flex flex-col items-center gap-4">

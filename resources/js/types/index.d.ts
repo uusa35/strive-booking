@@ -28,6 +28,7 @@ export interface SharedData {
     auth: Auth;
     ziggy: Config & { location: string };
     sidebarOpen: boolean;
+    locale?: 'en' | 'ar';
     [key: string]: unknown;
 }
 
@@ -43,6 +44,7 @@ export interface User {
     stage?: string;
     academic_interest?: string;
     email_verified_at: string | null;
+    last_login_at?: string | null;
     created_at: string;
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
