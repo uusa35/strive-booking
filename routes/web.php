@@ -24,7 +24,7 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware(['adminAccess'])->group(function () {
         Route::get('dashboard', function () {
-            $elements = User::where('id', '!=', 1)->get();
+            $elements = User::where('id', '!=', 1)->orderByDesc('id')->get();
             return Inertia::render('dashboard', compact('elements'));
         })->name('dashboard');
         Route::resource('user', UserController::class)->only('show');

@@ -96,5 +96,8 @@
     "save": "Save",
     "saving_password": "Updating password...",
     "appearance_title": "Site colors",
-    "appearance_desc": "Adjust your primary and background colors"
+    "appearance_desc": "Adjust your primary and background colors",
+    "search_by_name_mobile_email": "Search by name, mobile, or email..",
+    "reset": "Reset",
+    "results": "results"
 }
