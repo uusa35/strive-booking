@@ -4,11 +4,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { formatDateTime } from '@/constants';
+import { formatDateTime, toEn } from '@/constants';
 import AppLayout from '@/layouts/app-layout';
 import { useTrans } from '@/lib/i18n';
 import { User, type BreadcrumbItem } from '@/types';
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
 import {
     ArrowUpDown,
@@ -20,6 +20,8 @@ import {
     CalendarRange,
     Eye,
     ListFilter,
+    RotateCcw,
+    Search,
     UserCheck,
 } from 'lucide-react';
 import { useMemo, useState } from 'react';
@@ -27,10 +29,8 @@ import { useMemo, useState } from 'react';
 type Period = 'all' | 'today' | '7d' | '30d' | 'custom';
 
 export default function Dashboard({ elements }: { elements: User[] }) {
-    const {
-        ziggy: { location },
-    }: any = usePage().props;
     const { t, locale } = useTrans();
+    const [query, setQuery] = useState('');
     const [period, setPeriod] = useState<Period>('all');
     const [from, setFrom] = useState('');
     const [to, setTo] = useState('');
@@ -40,9 +40,17 @@ export default function Dashboard({ elements }: { elements: User[] }) {
             href: '/dashboard',
         },
     ];
+    const periodActive = period !== 'all' || !!from || !!to;
+    const filtersActive = periodActive || query.trim() !== '';
+    const resetFilters = () => {
+        setQuery('');
+        setPeriod('all');
+        setFrom('');
+        setTo('');
+    };
     const filtered = useMemo(() => {
         const users = elements ?? [];
-        if (period === 'all') return users;
+        const q = toEn(query).toLowerCase().trim();
         const now = new Date();
         let start: Date | null = null;
         let end: Date | null = null;
@@ -53,18 +61,23 @@ export default function Dashboard({ elements }: { elements: User[] }) {
             start = new Date(now.getTime() - 7 * 86400000);
         } else if (period === '30d') {
             start = new Date(now.getTime() - 30 * 86400000);
-        } else {
+        } else if (period === 'custom') {
             start = from ? new Date(from) : null;
             end = to ? new Date(`${to}T23:59:59`) : null;
         }
         return users.filter((u) => {
+            if (q) {
+                const haystack = `${u.full_name ?? ''} ${u.first_name ?? ''} ${u.last_name ?? ''} ${u.mobile ?? ''} ${u.email ?? ''}`.toLowerCase();
+                if (!haystack.includes(q)) return false;
+            }
+            if (!periodActive) return true;
             if (!u.last_login_at) return false;
             const loggedAt = new Date(u.last_login_at);
             if (start && loggedAt < start) return false;
             if (end && loggedAt > end) return false;
             return true;
         });
-    }, [elements, period, from, to]);
+    }, [elements, query, period, from, to]);
     const columns: ColumnDef<User>[] = useMemo(
         () => [
             {
@@ -267,11 +280,37 @@ export default function Dashboard({ elements }: { elements: User[] }) {
                 <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-3 rounded-2xl border border-gray-200 bg-gray-50/60 p-4 dark:border-gray-700 dark:bg-gray-800/40">
                     <div className="flex flex-wrap items-end gap-x-4 gap-y-3">
                         <div className="flex flex-col gap-y-1.5">
+                            <Label htmlFor="user-search" className="flex items-center gap-x-1.5 text-xs text-muted-foreground">
+                                <Search className="h-3.5 w-3.5" />
+                                {t('search')}
+                            </Label>
+                            <div className="relative">
+                                <Search className="pointer-events-none absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                                <Input
+                                    id="user-search"
+                                    type="text"
+                                    className="h-11 w-[290px] rounded-xl bg-white ps-9 dark:bg-gray-900"
+                                    placeholder={t('search_by_name_mobile_email')}
+                                    value={query}
+                                    onChange={(e) => setQuery(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                        <div className="flex flex-col gap-y-1.5">
                             <Label className="flex items-center gap-x-1.5 text-xs text-muted-foreground">
                                 <ListFilter className="h-3.5 w-3.5" />
                                 {t('login_period')}
                             </Label>
-                            <Select value={period} onValueChange={(v) => setPeriod(v as Period)}>
+                            <Select
+                                value={period}
+                                onValueChange={(v) => {
+                                    setPeriod(v as Period);
+                                    if (v !== 'custom') {
+                                        setFrom('');
+                                        setTo('');
+                                    }
+                                }}
+                            >
                                 <SelectTrigger className="h-11 w-[200px] rounded-xl bg-white dark:bg-gray-900">
                                     <div className="flex items-center gap-x-2">
                                         <CalendarClock className="h-4 w-4 text-muted-foreground" />
@@ -312,48 +351,60 @@ export default function Dashboard({ elements }: { elements: User[] }) {
                                 </SelectContent>
                             </Select>
                         </div>
-                        {period === 'custom' && (
-                            <>
-                                <div className="flex flex-col gap-y-1.5">
-                                    <Label htmlFor="login-from" className="flex items-center gap-x-1.5 text-xs text-muted-foreground">
-                                        <CalendarArrowDown className="h-3.5 w-3.5" />
-                                        {t('from')}
-                                    </Label>
-                                    <Input
-                                        id="login-from"
-                                        type="date"
-                                        className="h-11 w-[170px] rounded-xl bg-white dark:bg-gray-900"
-                                        value={from}
-                                        max={to || undefined}
-                                        onChange={(e) => setFrom(e.target.value)}
-                                    />
-                                </div>
-                                <div className="flex flex-col gap-y-1.5">
-                                    <Label htmlFor="login-to" className="flex items-center gap-x-1.5 text-xs text-muted-foreground">
-                                        <CalendarArrowUp className="h-3.5 w-3.5" />
-                                        {t('to')}
-                                    </Label>
-                                    <Input
-                                        id="login-to"
-                                        type="date"
-                                        className="h-11 w-[170px] rounded-xl bg-white dark:bg-gray-900"
-                                        value={to}
-                                        min={from || undefined}
-                                        onChange={(e) => setTo(e.target.value)}
-                                    />
-                                </div>
-                            </>
-                        )}
+                        <div className="flex flex-col gap-y-1.5">
+                            <Label htmlFor="login-from" className="flex items-center gap-x-1.5 text-xs text-muted-foreground">
+                                <CalendarArrowDown className="h-3.5 w-3.5" />
+                                {t('from')}
+                            </Label>
+                            <Input
+                                id="login-from"
+                                type="date"
+                                className="h-11 w-[170px] rounded-xl bg-white dark:bg-gray-900"
+                                value={from}
+                                max={to || undefined}
+                                onChange={(e) => {
+                                    setFrom(e.target.value);
+                                    setPeriod('custom');
+                                }}
+                            />
+                        </div>
+                        <div className="flex flex-col gap-y-1.5">
+                            <Label htmlFor="login-to" className="flex items-center gap-x-1.5 text-xs text-muted-foreground">
+                                <CalendarArrowUp className="h-3.5 w-3.5" />
+                                {t('to')}
+                            </Label>
+                            <Input
+                                id="login-to"
+                                type="date"
+                                className="h-11 w-[170px] rounded-xl bg-white dark:bg-gray-900"
+                                value={to}
+                                min={from || undefined}
+                                onChange={(e) => {
+                                    setTo(e.target.value);
+                                    setPeriod('custom');
+                                }}
+                            />
+                        </div>
+                        <Button
+                            type="button"
+                            variant="outline"
+                            className="h-11 rounded-xl"
+                            disabled={!filtersActive}
+                            onClick={resetFilters}
+                        >
+                            <RotateCcw className="h-4 w-4" />
+                            {t('reset')}
+                        </Button>
                     </div>
-                    {period !== 'all' && (
+                    {filtersActive && (
                         <Badge className="flex h-11 items-center gap-x-2 rounded-xl border border-teal-200 bg-teal-50 px-4 text-sm text-teal-800 dark:border-teal-800 dark:bg-teal-900/30 dark:text-teal-200">
                             <UserCheck className="h-4 w-4" />
                             <span className="text-base font-semibold tabular-nums">{filtered.length}</span>
-                            {t('users_logged_in_period')}
+                            {periodActive ? t('users_logged_in_period') : t('results')}
                         </Badge>
                     )}
                 </div>
-                <MainDataTable columns={columns} data={filtered} resetPath={location} searchable />
+                <MainDataTable columns={columns} data={filtered} />
             </div>
         </AppLayout>
     );
