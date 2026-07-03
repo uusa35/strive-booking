@@ -17,6 +17,13 @@ export const toEn = (s: any) =>
     s.replace(/[\u0660-\u0669\u06f0-\u06f9]/g, (a: any) => a.charCodeAt(0) & 15);
 export const whatsappUrl = (phone: string | number, message?: string) => `https://api.whatsapp.com/send?phone=${phone}&${message ? `text=${message}` : ``}`;
 
+export const formatDateTime = (value?: string | null): string => {
+    if (!value) return '';
+    const d = new Date(value);
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+};
+
 export const getImage = (name?: string) => {
     return `/images/${name}`;
 };
