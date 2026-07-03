@@ -10,7 +10,18 @@ import { useTrans } from '@/lib/i18n';
 import { User, type BreadcrumbItem } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
-import { ArrowUpDown, Eye } from 'lucide-react';
+import {
+    ArrowUpDown,
+    CalendarArrowDown,
+    CalendarArrowUp,
+    CalendarCheck,
+    CalendarClock,
+    CalendarDays,
+    CalendarRange,
+    Eye,
+    ListFilter,
+    UserCheck,
+} from 'lucide-react';
 import { useMemo, useState } from 'react';
 
 type Period = 'all' | 'today' | '7d' | '30d' | 'custom';
@@ -253,55 +264,92 @@ export default function Dashboard({ elements }: { elements: User[] }) {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={t('dashboard')} />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <div className="flex flex-wrap items-end gap-x-4 gap-y-3">
-                    <div className="flex flex-col gap-y-1">
-                        <Label className="text-xs text-muted-foreground">{t('login_period')}</Label>
-                        <Select value={period} onValueChange={(v) => setPeriod(v as Period)}>
-                            <SelectTrigger className="h-10 w-[180px] rounded-xl">
-                                <SelectValue placeholder={t('login_period')} />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="all">{t('all')}</SelectItem>
-                                <SelectItem value="today">{t('today')}</SelectItem>
-                                <SelectItem value="7d">{t('last_7_days')}</SelectItem>
-                                <SelectItem value="30d">{t('last_30_days')}</SelectItem>
-                                <SelectItem value="custom">{t('custom_range')}</SelectItem>
-                            </SelectContent>
-                        </Select>
+                <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-3 rounded-2xl border border-gray-200 bg-gray-50/60 p-4 dark:border-gray-700 dark:bg-gray-800/40">
+                    <div className="flex flex-wrap items-end gap-x-4 gap-y-3">
+                        <div className="flex flex-col gap-y-1.5">
+                            <Label className="flex items-center gap-x-1.5 text-xs text-muted-foreground">
+                                <ListFilter className="h-3.5 w-3.5" />
+                                {t('login_period')}
+                            </Label>
+                            <Select value={period} onValueChange={(v) => setPeriod(v as Period)}>
+                                <SelectTrigger className="h-11 w-[200px] rounded-xl bg-white dark:bg-gray-900">
+                                    <div className="flex items-center gap-x-2">
+                                        <CalendarClock className="h-4 w-4 text-muted-foreground" />
+                                        <SelectValue placeholder={t('login_period')} />
+                                    </div>
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="all">
+                                        <div className="flex items-center gap-x-2">
+                                            <ListFilter className="h-4 w-4 text-muted-foreground" />
+                                            {t('all')}
+                                        </div>
+                                    </SelectItem>
+                                    <SelectItem value="today">
+                                        <div className="flex items-center gap-x-2">
+                                            <CalendarCheck className="h-4 w-4 text-muted-foreground" />
+                                            {t('today')}
+                                        </div>
+                                    </SelectItem>
+                                    <SelectItem value="7d">
+                                        <div className="flex items-center gap-x-2">
+                                            <CalendarDays className="h-4 w-4 text-muted-foreground" />
+                                            {t('last_7_days')}
+                                        </div>
+                                    </SelectItem>
+                                    <SelectItem value="30d">
+                                        <div className="flex items-center gap-x-2">
+                                            <CalendarRange className="h-4 w-4 text-muted-foreground" />
+                                            {t('last_30_days')}
+                                        </div>
+                                    </SelectItem>
+                                    <SelectItem value="custom">
+                                        <div className="flex items-center gap-x-2">
+                                            <CalendarClock className="h-4 w-4 text-muted-foreground" />
+                                            {t('custom_range')}
+                                        </div>
+                                    </SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        {period === 'custom' && (
+                            <>
+                                <div className="flex flex-col gap-y-1.5">
+                                    <Label htmlFor="login-from" className="flex items-center gap-x-1.5 text-xs text-muted-foreground">
+                                        <CalendarArrowDown className="h-3.5 w-3.5" />
+                                        {t('from')}
+                                    </Label>
+                                    <Input
+                                        id="login-from"
+                                        type="date"
+                                        className="h-11 w-[170px] rounded-xl bg-white dark:bg-gray-900"
+                                        value={from}
+                                        max={to || undefined}
+                                        onChange={(e) => setFrom(e.target.value)}
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-y-1.5">
+                                    <Label htmlFor="login-to" className="flex items-center gap-x-1.5 text-xs text-muted-foreground">
+                                        <CalendarArrowUp className="h-3.5 w-3.5" />
+                                        {t('to')}
+                                    </Label>
+                                    <Input
+                                        id="login-to"
+                                        type="date"
+                                        className="h-11 w-[170px] rounded-xl bg-white dark:bg-gray-900"
+                                        value={to}
+                                        min={from || undefined}
+                                        onChange={(e) => setTo(e.target.value)}
+                                    />
+                                </div>
+                            </>
+                        )}
                     </div>
-                    {period === 'custom' && (
-                        <>
-                            <div className="flex flex-col gap-y-1">
-                                <Label htmlFor="login-from" className="text-xs text-muted-foreground">
-                                    {t('from')}
-                                </Label>
-                                <Input
-                                    id="login-from"
-                                    type="date"
-                                    className="h-10 w-[160px] rounded-xl"
-                                    value={from}
-                                    max={to || undefined}
-                                    onChange={(e) => setFrom(e.target.value)}
-                                />
-                            </div>
-                            <div className="flex flex-col gap-y-1">
-                                <Label htmlFor="login-to" className="text-xs text-muted-foreground">
-                                    {t('to')}
-                                </Label>
-                                <Input
-                                    id="login-to"
-                                    type="date"
-                                    className="h-10 w-[160px] rounded-xl"
-                                    value={to}
-                                    min={from || undefined}
-                                    onChange={(e) => setTo(e.target.value)}
-                                />
-                            </div>
-                        </>
-                    )}
                     {period !== 'all' && (
-                        <Badge variant="secondary" className="h-10 rounded-xl px-4 text-sm">
-                            {filtered.length} {t('users_logged_in_period')}
+                        <Badge className="flex h-11 items-center gap-x-2 rounded-xl border border-teal-200 bg-teal-50 px-4 text-sm text-teal-800 dark:border-teal-800 dark:bg-teal-900/30 dark:text-teal-200">
+                            <UserCheck className="h-4 w-4" />
+                            <span className="text-base font-semibold tabular-nums">{filtered.length}</span>
+                            {t('users_logged_in_period')}
                         </Badge>
                     )}
                 </div>
