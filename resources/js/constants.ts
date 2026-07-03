@@ -21,7 +21,9 @@ export const formatDateTime = (value?: string | null): string => {
     if (!value) return '';
     const d = new Date(value);
     const pad = (n: number) => String(n).padStart(2, '0');
-    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    const period = d.getHours() >= 12 ? 'PM' : 'AM';
+    const hours12 = d.getHours() % 12 || 12;
+    return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()} - ${pad(hours12)}:${pad(d.getMinutes())} ${period}`;
 };
 
 export const getImage = (name?: string) => {
