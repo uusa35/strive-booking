@@ -14,9 +14,10 @@ import {
     getSortedRowModel,
     useReactTable,
 } from '@tanstack/react-table';
-import { capitalize, toNumber } from 'lodash';
+import { toNumber } from 'lodash';
 import { ArrowLeft, LoaderIcon } from 'lucide-react';
 import { useState } from 'react';
+import { useTrans } from '@/lib/i18n';
 import { getImage, isLocal, toEn } from './../constants';
 import TextInput from './TextInput';
 interface DataTableProps<TData, TValue> {
@@ -34,6 +35,7 @@ export function MainDataTable<TData, TValue>({
     invisible = { desription: false },
     searchable = false,
 }: DataTableProps<TData, TValue>) {
+    const { t } = useTrans();
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(invisible);
@@ -81,7 +83,7 @@ export function MainDataTable<TData, TValue>({
                             <MagnifyingGlassIcon className="h-4 w-4 text-gray-400" aria-hidden="true" />
                         </div>
                         <TextInput
-                            placeholder={`${capitalize('search')}..`}
+                            placeholder={t('search')}
                             value={gFilter}
                             onChange={(e) => setGlobalFilter(toEn(e.target.value))}
                             className="block h-12 w-full rounded-3xl bg-gray-50 ps-10 sm:text-sm sm:leading-6"
@@ -169,7 +171,7 @@ export function MainDataTable<TData, TValue>({
                         <div>
                             <ArrowLeft className="h-3 w-3 rtl:rotate-180" />
                         </div>
-                        <div>previous</div>
+                        <div>{t('previous')}</div>
                     </div>
                 </Button>
                 <Button variant="outline" size="sm" className="rounded-lg">
@@ -177,7 +179,7 @@ export function MainDataTable<TData, TValue>({
                 </Button>
                 <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()} className="rounded-lg">
                     <div className="flex flex-row items-center justify-center gap-x-2 capitalize">
-                        <div>next</div>
+                        <div>{t('next')}</div>
                         <div>
                             <ArrowLeft className="h-3 w-3 ltr:rotate-180" />
                         </div>

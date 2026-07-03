@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toEn } from '@/constants';
 import AppLayout from '@/layouts/app-layout';
+import { useTrans } from '@/lib/i18n';
 import SettingsLayout from '@/layouts/settings/layout';
 import { type BreadcrumbItem } from '@/types';
 import { Transition } from '@headlessui/react';
@@ -13,12 +14,6 @@ import { first, map, values } from 'lodash';
 import { FormEventHandler, Fragment } from 'react';
 import { toast } from 'sonner';
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'بياناتي',
-        href: '/settings/profile',
-    },
-];
 
 type ProfileForm = {
     first_name: string;
@@ -44,6 +39,13 @@ export default function Profile({
     interests?: string[];
 }) {
     const { auth } = usePage<any>().props;
+    const { t } = useTrans();
+    const breadcrumbs: BreadcrumbItem[] = [
+        {
+            title: t('my_info'),
+            href: '/settings/profile',
+        },
+    ];
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm<Required<ProfileForm>>({
         first_name: auth.user?.first_name ?? '',
         last_name: auth.user?.last_name ?? '',
@@ -66,7 +68,7 @@ export default function Profile({
         patch(route('profile.update'), {
             preserveScroll: true,
             onSuccess: () => {
-                toast.success('تم تحديث البيانات بنجاح');
+                toast.success(t('profile_updated'));
             },
             onError: () => toast.error(first(values(errors))),
             onFinish: () => router.reload({ only: ['auth'] }),
@@ -75,14 +77,14 @@ export default function Profile({
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="بيانات الحساب" />
+            <Head title={t('account_details')} />
             <SettingsLayout>
                 <div className="space-y-6">
-                    <HeadingSmall title="معلومات الحساب" description=" يمكنك تحديث معلومات حسابك" />
+                    <HeadingSmall title={t('account_info')} description={t('account_info_desc')} />
                     <form onSubmit={submit} className="space-y-6">
                         <div className="grid gap-2">
                             <Label htmlFor="first_name" className="required">
-                                الاسم الاول
+                                {t('first_name')}
                             </Label>
 
                             <Input
@@ -92,14 +94,14 @@ export default function Profile({
                                 onChange={(e) => setData('first_name', e.target.value)}
                                 required
                                 autoComplete="first_name"
-                                placeholder="First name"
+                                placeholder={t('first_name')}
                             />
 
                             <InputError className="mt-2" message={errors.first_name} />
                         </div>
                         <div className="grid gap-2">
                             <Label htmlFor="last_name" className="required">
-                                الاسم الاخير
+                                {t('last_name')}
                             </Label>
 
                             <Input
@@ -108,14 +110,14 @@ export default function Profile({
                                 value={data.last_name}
                                 onChange={(e) => setData('last_name', e.target.value)}
                                 autoComplete="last_name"
-                                placeholder="Last name"
+                                placeholder={t('last_name')}
                             />
 
                             <InputError className="mt-2" message={errors.last_name} />
                         </div>
                         <div className="grid gap-2">
                             <Label htmlFor="mobile" className="required">
-                                الموبايل
+                                {t('mobile')}
                             </Label>
 
                             <Input
@@ -125,14 +127,14 @@ export default function Profile({
                                 onChange={(e) => setData('mobile', toEn(e.target.value))}
                                 required
                                 autoComplete="mobile"
-                                placeholder="Last name"
+                                placeholder={t('mobile')}
                             />
 
                             <InputError className="mt-2" message={errors.last_name} />
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="email">البريد الإلكتروني</Label>
+                            <Label htmlFor="email">{t('email_address')}</Label>
                             <Input
                                 id="email"
                                 type="email"
@@ -141,13 +143,13 @@ export default function Profile({
                                 onChange={(e) => setData('email', e.target.value)}
                                 required
                                 autoComplete="username"
-                                placeholder="Email address"
+                                placeholder={t('email_address')}
                             />
 
                             <InputError className="mt-2" message={errors.email} />
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="type">نوع التذكرة</Label>
+                            <Label htmlFor="type">{t('ticket_type')}</Label>
                             <div className="flex w-auto flex-row gap-4 py-4">
                                 {map(types, (t, i: number) => (
                                     <Fragment key={i}>
@@ -167,7 +169,7 @@ export default function Profile({
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="stage">المرحلة الدراسية</Label>
+                            <Label htmlFor="stage">{t('study_stage')}</Label>
                             <div className="flex w-auto flex-row gap-4 py-4">
                                 {map(stages, (t, i: number) => (
                                     <Fragment key={i}>
@@ -187,7 +189,7 @@ export default function Profile({
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="academic_interest">إهتمامك الدراسي</Label>
+                            <Label htmlFor="academic_interest">{t('academic_interest')}</Label>
                             <div className="flex w-auto flex-row gap-4 py-4">
                                 {map(interests, (t, i: number) => (
                                     <Fragment key={i}>
@@ -208,25 +210,25 @@ export default function Profile({
                         {mustVerifyEmail && auth.user.email_verified_at === null && (
                             <div>
                                 <p className="-mt-4 text-sm text-muted-foreground">
-                                    Your email address is unverified.{' '}
+                                    {t('email_unverified')}{' '}
                                     <Link
                                         href={route('verification.send')}
                                         method="post"
                                         as="button"
                                         className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
                                     >
-                                        Click here to resend the verification email.
+                                        {t('resend_verification')}
                                     </Link>
                                 </p>
                                 {status === 'verification-link-sent' && (
                                     <div className="mt-2 text-sm font-medium text-green-600">
-                                        A new verification link has been sent to your email address.
+                                        {t('verification_sent')}
                                     </div>
                                 )}
                             </div>
                         )}
                         <div className="flex items-center gap-4">
-                            <Button disabled={processing}>حفظ البيانات</Button>
+                            <Button disabled={processing}>{t('save_data')}</Button>
                             <Transition
                                 show={recentlySuccessful}
                                 enter="transition ease-in-out"
@@ -234,7 +236,7 @@ export default function Profile({
                                 leave="transition ease-in-out"
                                 leaveTo="opacity-0"
                             >
-                                <p className="text-sm text-neutral-600">تم تحديث البيانات بنجاح</p>
+                                <p className="text-sm text-neutral-600">{t('profile_updated')}</p>
                             </Transition>
                         </div>
                     </form>

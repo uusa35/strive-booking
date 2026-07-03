@@ -1,30 +1,27 @@
 import Heading from '@/components/heading';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { useTrans } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
 import { type PropsWithChildren } from 'react';
 
-const sidebarNavItems: NavItem[] = [
-    {
-        title: 'بياناتي',
-        href: '/settings/profile',
-        icon: null,
-    },
-    // {
-    //     title: 'كلمة المرور',
-    //     href: '/settings/password',
-    //     icon: null,
-    // },
-    {
-        title: 'شكل الموقع',
-        href: '/settings/appearance',
-        icon: null,
-    },
-];
-
 export default function SettingsLayout({ children }: PropsWithChildren) {
+    const { t } = useTrans();
+    const sidebarNavItems: NavItem[] = [
+        {
+            title: t('my_info'),
+            href: '/settings/profile',
+            icon: null,
+        },
+        {
+            title: t('site_appearance'),
+            href: '/settings/appearance',
+            icon: null,
+        },
+    ];
+
     // When server-side rendering, we only render the layout on the client...
     if (typeof window === 'undefined') {
         return null;
@@ -34,7 +31,7 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
 
     return (
         <div className="px-4 py-6">
-            <Heading title="بياناتي" description="التحكم بمعلومات الحساب" />
+            <Heading title={t('my_info')} description={t('account_info_control')} />
 
             <div className="flex flex-col space-y-8 lg:flex-row lg:space-y-0 lg:space-x-12">
                 <aside className="w-full max-w-xl lg:w-48">

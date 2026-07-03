@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toEn } from '@/constants';
 import AuthLayout from '@/layouts/auth-layout';
+import { useTrans } from '@/lib/i18n';
 import { Head, useForm } from '@inertiajs/react';
 import { first, values } from 'lodash';
 import { LoaderCircle } from 'lucide-react';
@@ -24,6 +25,7 @@ interface LoginProps {
 }
 
 export default function Login({ status, canResetPassword }: LoginProps) {
+    const { t } = useTrans();
     const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
         mobile: '',
         password: 'password',
@@ -34,18 +36,18 @@ export default function Login({ status, canResetPassword }: LoginProps) {
         e.preventDefault();
         post(route('login'), {
             onFinish: () => reset('password'),
-            onSuccess: () => toast.success('تم الدخول بنجاح'),
+            onSuccess: () => toast.success(t('login_success')),
             onError: (e) => toast.error(first(values(e))),
         });
     };
 
     return (
-        <AuthLayout title="الدخول لحسابك" description="إدخل رقم هاتفك الآن">
-            <Head title="الدخول لحسابك" />
+        <AuthLayout title={t('login_title')} description={t('login_description')}>
+            <Head title={t('login_title')} />
             <form className="flex flex-col gap-6" onSubmit={submit}>
                 <div className="grid gap-6">
                     <div className="grid gap-2">
-                        <Label htmlFor="email">الموبايل</Label>
+                        <Label htmlFor="email">{t('mobile')}</Label>
                         <Input
                             id="mobile"
                             type="text"
@@ -61,10 +63,10 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                     </div>
                     <div className="grid hidden gap-2">
                         <div className="flex items-center">
-                            <Label htmlFor="password">Password</Label>
+                            <Label htmlFor="password">{t('password')}</Label>
                             {canResetPassword && (
                                 <TextLink href={route('password.request')} className="ml-auto text-sm" tabIndex={5}>
-                                    نسيت كلة المرور؟
+                                    {t('forgot_password')}
                                 </TextLink>
                             )}
                         </div>
@@ -76,7 +78,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                             autoComplete="current-password"
                             value={data.password}
                             onChange={(e) => setData('password', e.target.value)}
-                            placeholder="Password"
+                            placeholder={t('password')}
                         />
                         <InputError message={errors.password} />
                     </div>
@@ -89,26 +91,26 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                             onClick={() => setData('remember', !data.remember)}
                             tabIndex={3}
                         />
-                        <Label htmlFor="remember">تذكرني</Label>
+                        <Label htmlFor="remember">{t('remember_me')}</Label>
                     </div>
 
                     <Button type="submit" className="btn-default mt-4 w-full" tabIndex={4} disabled={processing}>
                         <div className="flex flex-row items-center justify-center gap-x-4">
                             {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                            <div>الدخول للحساب</div>
+                            <div>{t('login_button')}</div>
                         </div>
                     </Button>
                 </div>
 
                 <div className="text-center text-sm text-muted-foreground">
-                    لا تمتلك حساب أو تذكرة
+                    {t('no_account')}
                     <TextLink href={route('register')} tabIndex={5} className="mx-2">
-                        سجل الآن
+                        {t('register_now')}
                     </TextLink>
                 </div>
                 <div className="text-center text-sm text-muted-foreground">
                     <TextLink href={route('home')} tabIndex={5} className="mx-2">
-                        العودة للرئيسية
+                        {t('back_home')}
                     </TextLink>
                 </div>
             </form>

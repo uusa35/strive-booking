@@ -2,12 +2,14 @@ import AppFrontHeader from '@/components/AppFrontHeader';
 import UserCard from '@/components/UserCard';
 import { getImage } from '@/constants';
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
+import { useTrans } from '@/lib/i18n';
 import { type SharedData } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 export default function ({ auth }: SharedData) {
+    const { t } = useTrans();
     const [qr, setQr] = useState<any>(null);
     const cleanup = useMobileNavigation();
 
@@ -30,8 +32,8 @@ export default function ({ auth }: SharedData) {
 
     return (
         <>
-            <Head title="معهد سترايف">
-                <meta name="description" content={'معهد سترايف التعليمي'} />
+            <Head title={t('strive_institute')}>
+                <meta name="description" content={t('strive_institute_desc')} />
             </Head>
             <div className="flex min-h-screen flex-col items-center bg-[#FDFDFC] p-4 text-[#1b1b18] lg:justify-center lg:p-8 dark:bg-[#0a0a0a]">
                 <AppFrontHeader />
@@ -46,7 +48,7 @@ export default function ({ auth }: SharedData) {
                                 <UserCard user={auth.user} />
                             ) : (
                                 <Link href={route('register')} target="_blank" className="btn-default px-4 text-lg sm:text-xl">
-                                    {auth?.user?.is_admin ? 'لوحة التحكم' : ' امسح الكود للتسجيل'}
+                                    {auth?.user?.is_admin ? t('dashboard') : t('scan_to_register')}
                                 </Link>
                             )}
                         </div>

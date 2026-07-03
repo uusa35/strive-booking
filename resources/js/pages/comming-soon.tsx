@@ -1,13 +1,15 @@
 import { getImage } from '@/constants';
+import { useTrans } from '@/lib/i18n';
 import { SharedData } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
 
 export default function () {
     const { name } = usePage<SharedData>().props;
+    const { t } = useTrans();
     return (
         <>
-            <Head title="معهد سترايف">
-                <meta name="description" content={'معهد سترايف التعليمي'} />
+            <Head title={t('strive_institute')}>
+                <meta name="description" content={t('strive_institute_desc')} />
             </Head>
             <div className="relative isolate px-6 pt-14 lg:px-8">
                 <div aria-hidden="true" className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
@@ -28,7 +30,7 @@ export default function () {
                     </div>
                     <div className="hidden sm:mb-8 sm:flex sm:justify-center">
                         <div className={`text-md relative rounded-full px-3 py-1 ${`text-gray-600`} ring-1 ring-gray-900/10 hover:ring-gray-900/20`}>
-                            قريبـــــا
+                            {t('coming_soon')}
                         </div>
                     </div>
                 </div>
