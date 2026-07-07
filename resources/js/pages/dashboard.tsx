@@ -19,6 +19,7 @@ import {
     CalendarDays,
     CalendarRange,
     Eye,
+    FileSpreadsheet,
     ListFilter,
     RotateCcw,
     Search,
@@ -27,6 +28,24 @@ import {
 import { useMemo, useState } from 'react';
 
 type Period = 'all' | 'today' | '7d' | '30d' | 'custom';
+
+const getPeriodBounds = (period: Period, from: string, to: string): { start: Date | null; end: Date | null } => {
+    const now = new Date();
+    let start: Date | null = null;
+    let end: Date | null = null;
+    if (period === 'today') {
+        start = new Date(now);
+        start.setHours(0, 0, 0, 0);
+    } else if (period === '7d') {
+        start = new Date(now.getTime() - 7 * 86400000);
+    } else if (period === '30d') {
+        start = new Date(now.getTime() - 30 * 86400000);
+    } else if (period === 'custom') {
+        start = from ? new Date(from) : null;
+        end = to ? new Date(`${to}T23:59:59`) : null;
+    }
+    return { start, end };
+};
 
 export default function Dashboard({ elements }: { elements: User[] }) {
     const { t, locale } = useTrans();
@@ -48,23 +67,30 @@ export default function Dashboard({ elements }: { elements: User[] }) {
         setFrom('');
         setTo('');
     };
+    // Shared with the table's filter so the export uses the exact bounds the table is showing,
+    // not bounds recomputed at click time (relative presets drift while the page sits idle)
+    const bounds = useMemo(() => getPeriodBounds(period, from, to), [period, from, to]);
+    const exportExcel = () => {
+        const { start, end } = bounds;
+        const params: Record<string, string> = {
+            tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        };
+        const q = query.trim();
+        if (q) params.q = q;
+        if (periodActive) {
+            params.login_filter = '1';
+            if (start) params.start = start.toISOString();
+            if (end) params.end = end.toISOString();
+            if (period !== 'all') params.period = period;
+            if (from) params.from = from;
+            if (to) params.to = to;
+        }
+        window.location.href = route('dashboard.export', params);
+    };
     const filtered = useMemo(() => {
         const users = elements ?? [];
         const q = toEn(query).toLowerCase().trim();
-        const now = new Date();
-        let start: Date | null = null;
-        let end: Date | null = null;
-        if (period === 'today') {
-            start = new Date(now);
-            start.setHours(0, 0, 0, 0);
-        } else if (period === '7d') {
-            start = new Date(now.getTime() - 7 * 86400000);
-        } else if (period === '30d') {
-            start = new Date(now.getTime() - 30 * 86400000);
-        } else if (period === 'custom') {
-            start = from ? new Date(from) : null;
-            end = to ? new Date(`${to}T23:59:59`) : null;
-        }
+        const { start, end } = bounds;
         return users.filter((u) => {
             if (q) {
                 const haystack = `${u.full_name ?? ''} ${u.first_name ?? ''} ${u.last_name ?? ''} ${u.mobile ?? ''} ${u.email ?? ''}`.toLowerCase();
@@ -77,7 +103,7 @@ export default function Dashboard({ elements }: { elements: User[] }) {
             if (end && loggedAt > end) return false;
             return true;
         });
-    }, [elements, query, period, from, to]);
+    }, [elements, query, bounds]);
     const columns: ColumnDef<User>[] = useMemo(
         () => [
             {
@@ -289,6 +315,7 @@ export default function Dashboard({ elements }: { elements: User[] }) {
                                 <Input
                                     id="user-search"
                                     type="text"
+                                    maxLength={100}
                                     className="h-11 w-[290px] rounded-xl bg-white ps-9 dark:bg-gray-900"
                                     placeholder={t('search_by_name_mobile_email')}
                                     value={query}
@@ -396,13 +423,23 @@ export default function Dashboard({ elements }: { elements: User[] }) {
                             {t('reset')}
                         </Button>
                     </div>
-                    {filtersActive && (
-                        <Badge className="flex h-11 items-center gap-x-2 rounded-xl border border-teal-200 bg-teal-50 px-4 text-sm text-teal-800 dark:border-teal-800 dark:bg-teal-900/30 dark:text-teal-200">
-                            <UserCheck className="h-4 w-4" />
-                            <span className="text-base font-semibold tabular-nums">{filtered.length}</span>
-                            {periodActive ? t('users_logged_in_period') : t('results')}
-                        </Badge>
-                    )}
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-3">
+                        {filtersActive && (
+                            <Badge className="flex h-11 items-center gap-x-2 rounded-xl border border-teal-200 bg-teal-50 px-4 text-sm text-teal-800 dark:border-teal-800 dark:bg-teal-900/30 dark:text-teal-200">
+                                <UserCheck className="h-4 w-4" />
+                                <span className="text-base font-semibold tabular-nums">{filtered.length}</span>
+                                {periodActive ? t('users_logged_in_period') : t('results')}
+                            </Badge>
+                        )}
+                        <Button
+                            type="button"
+                            className="h-11 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600"
+                            onClick={exportExcel}
+                        >
+                            <FileSpreadsheet className="h-4 w-4" />
+                            {t('export_excel')}
+                        </Button>
+                    </div>
                 </div>
                 <MainDataTable columns={columns} data={filtered} />
             </div>
