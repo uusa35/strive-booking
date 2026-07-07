@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserExportController;
 use App\Models\User;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             $elements = User::where('id', '!=', 1)->orderByDesc('id')->get();
             return Inertia::render('dashboard', compact('elements'));
         })->name('dashboard');
+        Route::get('dashboard/export', UserExportController::class)->name('dashboard.export');
         Route::resource('user', UserController::class)->only('show');
     });
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
